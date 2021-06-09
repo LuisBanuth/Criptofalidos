@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nao_pode_zerar_ativo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Quantidade__c &lt; 0,  (Quantidade__c + AtivoDaCarteira__r.TotalTranscoes__c) &lt; 0)</errorConditionFormula>
+    <errorDisplayField>AtivoDaCarteira__c</errorDisplayField>
+    <errorMessage>O ativo não pode ficar abaixo de zero,</errorMessage>
+</ValidationRule>
