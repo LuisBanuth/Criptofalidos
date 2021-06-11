@@ -86,9 +86,7 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
-        <content>CriarOrdem</content>
-        <skipRecordTypeSelect>true</skipRecordTypeSelect>
-        <type>Visualforce</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
