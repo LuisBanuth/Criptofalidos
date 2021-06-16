@@ -6,40 +6,25 @@ public with sharing class OrdemTriggerHandler extends TriggerHandler{
 
     protected override void beforeInsert(){
         for(Ordem__c ordermNova : (List<Ordem__c>) trigger.new){
-            //Calculo do total
-            if(ordermNova.Total__c == null){
-                if(ordermNova.Preco__c !=null && ordermNova.Quantidade__c != null){
-                    ordermNova.Total__c = ordermNova.Quantidade__c * ordermNova.Preco__c;
-                } else {
-                    ordermNova.adderror('Os valores de quantidade e preço não foram preenchidos');
-                }
-            }
-            //Calculo da quantidade
-            else{
-                if(ordermNova.Preco__c !=null){
-                    ordermNova.Quantidade__c = ordermNova.Total__c / ordermNova.Preco__c;
-                } else {
-                    ordermNova.adderror('Os valores de preço não foram preenchidos');
-                }
-            }
+            OrdemDomain ordem = new OrdemDomain(ordermNova);
+
+            if(ordem.getTotal() == null) ordem.recalculaTotal();
+            else ordem.recalculaQuantidade();
         }
     }
 
     protected override void beforeUpdate(){
         for(Ordem__c ordermNova : (List<Ordem__c>) trigger.new){
+            OrdemDomain ordem = new OrdemDomain(ordermNova);
+
             Ordem__c ordemAntiga = (Ordem__c) trigger.oldMap.get(ordermNova.Id);
 
-            if(ordermNova.Quantidade__c != null && ordermNova.Preco__c != null){
-                //Erro de alteração de total
-                if(ordemAntiga.Total__c != ordermNova.Total__c && ordermNova.Total__c  != ordermNova.Quantidade__c * ordermNova.Preco__c ){
-                    ordermNova.adderror('O total não pode ser alterado manualmente depois que a ordem foi criada.');
-                }
-                //Recalculo do total
-                if(ordemAntiga.Quantidade__c != ordermNova.Quantidade__c || ordemAntiga.Preco__c != ordermNova.Preco__c ){
-                    ordermNova.Total__c = ordermNova.Quantidade__c * ordermNova.Preco__c;
-                }
-            } else {
-                ordermNova.adderror('Os valores de quantidade e preço não foram preenchidos');
+            if(ordem.isFieldDifferent(Schema.Ordem__c.Total__c, ordemAntiga)) {    
+               ordermNova.adderror('O total não pode ser alterado manualmente depois que a ordem foi criada.');
+            }
+                
+            if(ordem.isFieldDifferent(Schema.Ordem__c.Quantidade__c, ordemAntiga) || ordem.isFieldDifferent(Schema.Ordem__c.Preco__c, ordemAntiga)) {
+                ordem.recalculaTotal();
             }
         }
     }

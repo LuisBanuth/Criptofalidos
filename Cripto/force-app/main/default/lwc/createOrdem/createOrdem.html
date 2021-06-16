@@ -1,0 +1,56 @@
+<template>
+    <lightning-card  title="Realizar uma ordem">
+        <div class="slds-p-horizontal_small">
+            <lightning-combobox
+                name="mercado"
+                label="Mercado"
+                value={mercado}
+                placeholder="Selecione o mercado"
+                options={mercados}
+                onchange={handleMercado} ></lightning-combobox>
+
+            <lightning-combobox
+                    name="carteira"
+                    label="Carteira"
+                    value={carteira}
+                    placeholder="Selecione a carteira"
+                    options={carteiras}
+                    onchange={handleCarteira} ></lightning-combobox>
+
+            <lightning-combobox
+                    name="tipoOrdem"
+                    label="Tipo da ordem"
+                    value={tipoOrdem}
+                    placeholder="Selecione o tipo da ordem"
+                    options={tiposOrdem}
+                    onchange={handleTipoOrdem} ></lightning-combobox>
+        
+            
+            
+            <lightning-input 
+                type="number" 
+                name="preco" 
+                label="Preço" 
+                value={preco}
+                onchange={handlePreco}></lightning-input>
+            <!-- {mercadoPrimario}<br> -->
+            <lightning-input 
+                type="number" 
+                name="quantidade" 
+                label="Quantidade" 
+                value={quantidade}
+                onchange={handleQuantidade}></lightning-input>
+            <!-- {mercadoSecundario}<br> -->
+            <lightning-input 
+                                    type="number" 
+                                    name="total" 
+                                    label="Total" 
+                                    value={total}
+                                    onchange={handleTotal}></lightning-input>
+            <br>
+            <lightning-button variant="brand" label="Criar" title="Criar ordem" onclick={handleOrdem} class="slds-m-left_x-small"></lightning-button>
+        </div>
+
+    </lightning-card>
+    
+</template>
