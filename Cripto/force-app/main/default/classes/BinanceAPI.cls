@@ -26,4 +26,10 @@ public with sharing class BinanceAPI {
         String symbol;
         String price;
     }
+
+    @AuraEnabled
+    public static String getRecordTypeId(String ordemType){
+        Id rTypeId = Schema.SObjectType.Ordem__c.getRecordTypeInfosByDeveloperName().get(ordemType).getRecordTypeId();
+        return rTypeId;
+    }
 }

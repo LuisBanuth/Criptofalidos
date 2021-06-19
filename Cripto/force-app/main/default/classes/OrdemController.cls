@@ -27,4 +27,9 @@ public with sharing class OrdemController {
          }     
          return pickListValuesList;
      }
+
+     @AuraEnabled
+     public static List<Ordem__c> getOrderList(String markedId){
+        return [select Id, Name, OperacaoMercado__c, Tipo__c, Status__c, Quantidade__c, Total__c, Validade__c, Preco__c from Ordem__c where Mercado__c = :markedId];
+     }
 }
