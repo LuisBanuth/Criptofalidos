@@ -1,5 +1,5 @@
-trigger MercadoTrigger on Mercado__c (before update) {
-    // new MercadoTriggerHandler().run();
+trigger MercadoTrigger on Mercado__c (after update) {
+    new MercadoTriggerHandler().run();
 
     // // Desenvolvedor Salesfoce Voldemorte
     // mercado__c merc = trigger.new[0];
